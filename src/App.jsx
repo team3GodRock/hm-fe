@@ -1,19 +1,18 @@
-import { BrowserRouter, Route } from "react-router-dom";
-import './App.css'
-
-import ProfilePage from './pages/ProfilePage';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+import ProfilePage from './pages/Profile/ProfilePage';
 
 function App() {
-
   return (
-    <>
-      <Route>
-        <BrowserRouter>
-          <Route path="/profile" component={ProfilePage} />
-        </BrowserRouter>
-      </Route>
-    </>
-  )
+    <RecoilRoot> {/* Recoil 상태 관리를 위한 루트 */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<ProfilePage />} />
+        </Routes>
+      </Router>
+    </RecoilRoot>
+  );
 }
 
-export default App
+export default App;
