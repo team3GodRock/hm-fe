@@ -1,11 +1,21 @@
-import './profile.css';
+import SideBar from '../../components/Sidebar';
+import './ProfilePage.css';
+import useNav from '../../hooks/useNav';
+
 
 const ProfilePage = () => {
+    const { navMenus, navSubMenus } = useNav();
+
     return (
-    <div className="container">
-        <h1 className="title">ProfilePage</h1>
-        <p className="description">ProfilePage</p>
-    </div>
+    <>
+        <SideBar
+        navMenus={navMenus}
+        navSubMenus={navSubMenus}
+        title='정치인'/>
+        <div className="profile-container">
+            <h1>Profile Page</h1>
+        </div>
+    </>
     );
 };
 
