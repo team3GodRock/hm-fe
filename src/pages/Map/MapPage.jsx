@@ -33,6 +33,16 @@ const MapPage = () => {
   const jeonbukData = regionData.find(region => region.id === "jeonbuk");
   const jeonnamData = regionData.find(region => region.id === "jeonnam");
   const jejuData = regionData.find(region => region.id === "jeju");
+  const seoulData = regionData.find(region => region.id === "seoul");
+  const busanData = regionData.find(region => region.id === "busan");
+  const daegudata = regionData.find(region => region.id === "daegu");
+  const incheondata = regionData.find(region => region.id === "incheon");
+  const ulsandata = regionData.find(region => region.id === "ulsan");
+  const daejeondata = regionData.find(region => region.id === "ulsan");
+  const gwangjudata = regionData.find(region => region.id === "gwangju");
+  
+
+
 
   const { navMenus, navSubMenus } = useNav();
 
@@ -188,6 +198,77 @@ const MapPage = () => {
                   onMouseEnter={(e) => (e.target.style.fill = "red")}
                   onMouseLeave={(e) => (e.target.style.fill = "transparent")}
                   onClick={() => setSelectedRegion(jejuData.name)}
+                />
+              )}
+              {/* 광역시 */}
+              { seoulData && (
+                <polyline
+                  key={seoulData.id}
+                  id={seoulData.id}
+                  points={seoulData.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { busanData && (
+                <polyline
+                  key={busanData.id}
+                  id={busanData.id}
+                  points={busanData.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { daegudata && (
+                <polyline
+                  key={daegudata.id}
+                  id={daegudata.id}
+                  points={daegudata.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { incheondata && (
+                <polyline
+                  key={incheondata.id}
+                  id={incheondata.id}
+                  points={incheondata.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { daejeondata && (
+                <polyline
+                  key={daejeondata.id}
+                  id={daejeondata.id}
+                  points={daejeondata.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { ulsandata && (
+                <polyline
+                  key={ulsandata.id}
+                  id={ulsandata.id}
+                  points={ulsandata.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
+                />
+              )}
+               { gwangjudata && (
+                <polyline
+                  key={gwangjudata.id}
+                  id={gwangjudata.id}
+                  points={gwangjudata.path}
+                  fill="transparent"
+                  stroke="black"
+                  strokeWidth="3"
                 />
               )}
             </InteractiveMap>
