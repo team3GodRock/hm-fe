@@ -1,30 +1,52 @@
 import SideBar from '../../components/Sidebar';
 import { PageBox, MainBox, HeaderWrapper, HorizontalDivider, ContainerBox } from '../../styles/globalstyles';
 import useNav from '../../hooks/useNav';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import FormProfile from '../../components/FormProfile';
+import { getPersonInfoById, getAllPersonList } from '../../api';
+
 
 const ListPage = () => {
     const { navMenus, navSubMenus } = useNav();
     const location = useLocation();
-    const [name, setName] = useState('');
+    const [pageName, setPageName] = useState('');
+    const [profileListData, setProfileListData] = useState([]);
 
-    const dummyData = {
-        candidate: "1",
-        profileName: "유재석",
-        partyName: "숭구리당당",
-        supportingPercentage: 50,
-        imgSrc: "https://i.namu.wiki/i/mWLCLSO9VC-_L1C780b2XvYOlXGesQL3NrtsHWm2xVW1paaLWVv8DrDWd3R5iwwjWY-MapZ1rICP2-2mTwiy968UN4tOh9d2S035HaZn__4ZlXYW14-Adjz4vBF9EpfxrmYkqZ_NH_lazX1o-JpJWg.webp",
-        headerText: "headerText",
-        contentArray: ["Loren Ipsum Loren Ipsum Loren Ipsum", "Loren Ipsum Loren Ipsum Loren Ipsum", "Loren Ipsum Loren Ipsum Loren Ipsum"]
+
+    const fetchListData = async () => {
+        try {
+            const data = await getAllPersonList();
+            const newData = data.filter((item) => 
+                item.position === '대통령' || item.position === '도지사'
+            );
+
+            const profilePromises = newData.map((item) => getPersonInfoById(item.id));
+            const profiles = await Promise.all(profilePromises);
+            setProfileListData(profiles);
+    
+            console.log(profiles);
+        } catch (error) {
+            console.error('Error fetching list data:', error);
+        }
     };
+    
+
+    const fetchDataCallback = useCallback(() => {
+        fetchListData();
+    }, []);
+
+    useEffect(() => {
+        fetchDataCallback();
+    }
+    // eslint-disable-next-line
+    , []);
 
     useEffect(() => {
         if (location.pathname.includes('/govern')) {
-            setName('도지사');
+            setPageName('도지사');
         } else if (location.pathname.includes('/president')) {
-            setName('대통령');
+            setPageName('대통령');
         }
     }, [location.pathname]);
 
@@ -34,19 +56,12 @@ const ListPage = () => {
             navMenus={navMenus}
             navSubMenus={navSubMenus}/>
             <MainBox>
-                <HeaderWrapper>선거철 공약 - {name}</HeaderWrapper>
+                <HeaderWrapper>선거철 공약 - {pageName}</HeaderWrapper>
                 <HorizontalDivider/>
                 <ContainerBox>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-                    <FormProfile contentArray={dummyData}/>
-
+                    {profileListData.map((profile, index) => (
+                        <FormProfile key={index} contentArray={{ ...profile, index }} />
+                    ))}
                 </ContainerBox>
             </MainBox>
         </PageBox>

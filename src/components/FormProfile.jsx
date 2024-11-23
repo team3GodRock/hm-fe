@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback} from "react";
 import { Dot, HorizontalDivider } from "../styles/globalstyles";
+import { getPromiseInfoById } from "../api";
 
 const FormContainer = styled.div`
     width: 100%;
@@ -57,18 +58,9 @@ const PromiseContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     padding: 10px 0;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
 `;
-
-const PromiseHeader = styled.div`
-    font-size: 16px;
-    font-weight: 600;
-    align-items: flex-start;
-    text-align: left;
-    width: 100%;
-`;
-
 
 const PromiseContent = styled.div`
     display: flex;
@@ -94,48 +86,54 @@ const TextWrapper = styled.div`
 
 
 const FormProfile = ({ contentArray }) => {
+    const [profileData, setProfileData] = useState([]);
     const [promiseData, setPromiseData] = useState([]);
 
     useEffect(() => {
-        setPromiseData(contentArray);
+        setProfileData(contentArray);
     }, [contentArray]);
+
+    const fetchPromiseData = async () => {
+        try {
+            const data = await getPromiseInfoById(profileData.id);
+            setPromiseData(data);
+        } catch (error) {
+            console.error('Error fetching promise data:', error);
+        }
+    };
+
+    const fetchDataCallback = useCallback(() => {
+        fetchPromiseData();
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        fetchDataCallback();
+    // eslint-disable-next-line
+    }, []);
+
 
     return (
         <>
             <FormContainer>
                 <TextContainer>
-                    <CandidateName>{promiseData.candidate}번 후보</CandidateName>
-                    <ProfileName>{promiseData.profileName}</ProfileName>
+                    <CandidateName>{profileData.index + 1}번 후보</CandidateName>
+                    <ProfileName>{profileData.name}</ProfileName>
                     <TextInnerContainer>
-                        <InnerText>{promiseData.partyName}</InnerText>
-                        <InnerText>지지율 {promiseData.supportingPercentage}%</InnerText>
+                        <InnerText>{profileData.affliation}</InnerText>
+                        <InnerText>지지율 {profileData.supporting}%</InnerText>
                     </TextInnerContainer>
                 </TextContainer>
-                <ImageWrapper src={promiseData.imgSrc}/>
+                <ImageWrapper src={profileData.photo}/>
                 <PromiseContainer>
-                    <PromiseHeader>{promiseData.partyName}</PromiseHeader>
-                    <PromiseContent>
-                        <PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText>
-                        <PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText><PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText><PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText><PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText><PromiseText>
-                            <Dot/>
-                            <TextWrapper>{promiseData.contentArray}</TextWrapper>
-                        </PromiseText>           
-                    </PromiseContent>
+                    {promiseData.slice(0, 6).map((promise, index) => (
+                        <PromiseContent key={index}>
+                            <PromiseText>
+                                <Dot/>
+                                <TextWrapper>{promise.promiseDetail}</TextWrapper>
+                            </PromiseText>
+                        </PromiseContent>
+                    ))}
                 </PromiseContainer>
             </FormContainer>
             <HorizontalDivider/>
