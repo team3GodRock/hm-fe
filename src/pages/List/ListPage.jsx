@@ -17,15 +17,19 @@ const ListPage = () => {
     const fetchListData = async () => {
         try {
             const data = await getAllPersonList();
-            const newData = data.filter((item) => 
-                item.position === '대통령' || item.position === '도지사'
-            );
-
-            const profilePromises = newData.map((item) => getPersonInfoById(item.id));
-            const profiles = await Promise.all(profilePromises);
-            setProfileListData(profiles);
-    
-            console.log(profiles);
+            if (location.pathname.includes('/govern')) {
+                const newData = data.filter((item) => item.position === '도지사후보'
+                );
+                const profilePromises = newData.map((item) => getPersonInfoById(item.id));
+                const profiles = await Promise.all(profilePromises);
+                setProfileListData(profiles);
+            } else if (location.pathname.includes('/president')) {
+                const newData = data.filter((item) => item.position === '대통령후보'
+                );
+                const profilePromises = newData.map((item) => getPersonInfoById(item.id));
+                const profiles = await Promise.all(profilePromises);
+                setProfileListData(profiles);
+            }
         } catch (error) {
             console.error('Error fetching list data:', error);
         }
@@ -34,6 +38,7 @@ const ListPage = () => {
 
     const fetchDataCallback = useCallback(() => {
         fetchListData();
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
