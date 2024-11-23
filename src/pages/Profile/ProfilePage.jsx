@@ -6,7 +6,7 @@ import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
 import PercentageDisplay from '../../components/PercentageDisplay.jsx';
 import { useCallback, useEffect, useState } from 'react';
-import { getPersonInfoById, getPromiseInfoById } from '../../api';
+import { getPersonInfoById, getPromiseInfoById, getRecordListById } from '../../api';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -105,8 +105,9 @@ const FormListContainer = styled.div`
 
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
-    const [personInfo, setPersonInfo] = useState({});
+    const [personInfo, setPersonInfo] = useState([]);
     const [promiseInfo, setPromiseInfo] = useState([]);
+    const [recordInfo, setRecordInfo] = useState([]);
     
 
     const fetchProfileData = async () => {
@@ -122,15 +123,26 @@ const ProfilePage = () => {
         try {
             const data = await getPromiseInfoById(1);
             setPromiseInfo(data);
-            console.log(data);
         } catch (error) {
             console.error('Error fetching promise info:', error);
         }
     };
     
+    const fetchRecordData = async () => {
+        try {
+            const data = await getRecordListById(1);
+            setRecordInfo(data);
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching record list:', error);
+        }
+    };
+
+
     const fetchDataCallback = useCallback(() => {
         fetchProfileData();
         fetchPromiseData();
+        fetchRecordData();
     }, []);
 
     useEffect(() => {
@@ -158,16 +170,14 @@ const ProfilePage = () => {
                         </NameContainer>
                         <ResumeContainer>
                             <FormContainer>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                               {recordInfo.slice(-8, -4).map((record, index) => (
+                                   <FormResume key={index} contentText={record.history} />
+                               ))}
                             </FormContainer>
                             <FormContainer>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                                {recordInfo.slice(-4, -1).map((record, index) => (
+                                   <FormResume key={index} contentText={record.history} />
+                               ))}
                             </FormContainer>
                         </ResumeContainer>
                     </TextContainer>
