@@ -5,7 +5,8 @@ import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, Image
 import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
 import PercentageDisplay from '../../components/PercentageDisplay.jsx';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { getPersonInfoById } from '../../api';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -104,11 +105,25 @@ const FormListContainer = styled.div`
 
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
-    const [isPresident, setIsPresident] = useState(false);
-    useEffect(() => {
-        if (location.pathname.includes('/president')) {
-            setIsPresident(true);
+    const [personInfo, setPersonInfo] = useState({});
+    
+
+    const fetchProfileData = async () => {
+        try {
+            const data = await getPersonInfoById(1);
+            setPersonInfo(data);
+        } catch (error) {
+            console.error('Error fetching person info:', error);
         }
+    };
+    
+    const fetchDataCallback = useCallback(() => {
+        fetchProfileData();
+    }, []);
+
+    useEffect(() => {
+        fetchDataCallback();
+        // eslint-disable-next-line
     }, []);
 
     const dummyData = "loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum ";
@@ -120,16 +135,16 @@ const ProfilePage = () => {
         navSubMenus={navSubMenus}/>
         <MainBox>
             <HeaderWrapper>
-                정치인 프로필 - {isPresident ? "대통령" : "도지사"}
+                정치인 프로필 - {personInfo.position == "대통령"? "대통령" : "도지사"}
             </HeaderWrapper>
             <HorizontalDivider />
             <ContainerBox>
                 <HeadProfile>
-                    <ImageWrapper src="https://i.namu.wiki/i/mWLCLSO9VC-_L1C780b2XvYOlXGesQL3NrtsHWm2xVW1paaLWVv8DrDWd3R5iwwjWY-MapZ1rICP2-2mTwiy968UN4tOh9d2S035HaZn__4ZlXYW14-Adjz4vBF9EpfxrmYkqZ_NH_lazX1o-JpJWg.webp" alt="대통령 이미지" />
+                    <ImageWrapper src={personInfo.photo} alt="대통령 이미지" />
                     <TextContainer>
                         <NameContainer>
-                            <TextPosition>대통령</TextPosition>
-                            <TextName>유재석</TextName>
+                            <TextPosition>{personInfo.position}</TextPosition>
+                            <TextName>{personInfo.name}</TextName>
                         </NameContainer>
                         <ResumeContainer>
                             <FormContainer>
@@ -149,8 +164,8 @@ const ProfilePage = () => {
                 </HeadProfile>
                 <HorizontalDivider />
                 <ProportionContainer>
-                    <PercentageDisplay label="지지율" percentage={50}/>
-                    <PercentageDisplay label="공약 달성도" percentage={70}/>
+                    <PercentageDisplay label="지지율" percentage={Math.round(personInfo.supporting)}/>
+                    <PercentageDisplay label="공약 달성도" percentage={Math.round(personInfo.achievement)}/>
                 </ProportionContainer>
                 <PromiseContainer>
                     공약
