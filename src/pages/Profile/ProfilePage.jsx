@@ -5,6 +5,7 @@ import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, Image
 import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
 import PercentageDisplay from '../../components/PercentageDisplay.jsx';
+import { useEffect, useState } from 'react';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -103,15 +104,24 @@ const FormListContainer = styled.div`
 
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
+    const [isPresident, setIsPresident] = useState(false);
+    useEffect(() => {
+        if (location.pathname.includes('/president')) {
+            setIsPresident(true);
+        }
+    }, []);
 
     const dummyData = "loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum ";
+    
     return (
     <PageBox>
         <SideBar
         navMenus={navMenus}
         navSubMenus={navSubMenus}/>
         <MainBox>
-            <HeaderWrapper>정치인 프로필 - 대통령</HeaderWrapper>
+            <HeaderWrapper>
+                정치인 프로필 - {isPresident ? "대통령" : "도지사"}
+            </HeaderWrapper>
             <HorizontalDivider />
             <ContainerBox>
                 <HeadProfile>
