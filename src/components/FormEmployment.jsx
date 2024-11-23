@@ -13,14 +13,14 @@ const FormContainer = styled.div`
 `;
 
 const FormBadge = styled.div`
-    width: 60px;
-    height: 30px;
+    width: 80px;
+    height: 40px;
     display: flex;
-    background-color: ${props => props.isSucceed ? "#D6FFDE" : "#F6FABD"};
+    background-color: ${props => props.$isSucceed ? "#D6FFDE" : "#F6FABD"};
     border-radius: 10px;
     z-index: 1;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     color: #3E6AF2;
     align-items: center;
     justify-content: center;
@@ -31,27 +31,26 @@ const FormTextContainer = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
     padding: 10px 0;
 `;
 
 const FormTextHeader = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
 `;
 
 const FormTextContent = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
-    font-size: 16px;
-    font-weight: 200;
+    font-size: 24px;
 `;
 
-const FormEmployment = ({ HeaderText, ContentText, isSucceed }) => {
+
+
+const FormEmployment = ({ HeaderText, ContentText, isSucceed = false }) => {
     const [badgeText, setBadgeText] = useState("완료");
     
     useEffect(() => {
@@ -62,7 +61,7 @@ const FormEmployment = ({ HeaderText, ContentText, isSucceed }) => {
 
     return (
         <FormContainer>
-            <FormBadge isSucceed={isSucceed}>{badgeText}</FormBadge>
+            <FormBadge $isSucceed={isSucceed}>{badgeText}</FormBadge>
             <FormTextContainer>
                 <FormTextHeader>{HeaderText}</FormTextHeader>
                 <FormTextContent>{ContentText}</FormTextContent>

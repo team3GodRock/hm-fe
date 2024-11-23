@@ -13,11 +13,11 @@ const ListPage = () => {
     const dummyData = {
         candidate: "1",
         profileName: "유재석",
-        partyName: "집에가고싶당",
+        partyName: "숭구리당당",
         supportingPercentage: 50,
         imgSrc: "https://i.namu.wiki/i/mWLCLSO9VC-_L1C780b2XvYOlXGesQL3NrtsHWm2xVW1paaLWVv8DrDWd3R5iwwjWY-MapZ1rICP2-2mTwiy968UN4tOh9d2S035HaZn__4ZlXYW14-Adjz4vBF9EpfxrmYkqZ_NH_lazX1o-JpJWg.webp",
         headerText: "headerText",
-        contentArray: ["안녕하세요 저는 이곤우입니다. 반갑습니다", "안녕하세요 저는 이곤우입니다. 반갑습니다", "안녕하세요 저는 이곤우입니다. 반갑습니다"]
+        contentArray: ["Loren Ipsum Loren Ipsum Loren Ipsum", "Loren Ipsum Loren Ipsum Loren Ipsum", "Loren Ipsum Loren Ipsum Loren Ipsum"]
     };
 
     useEffect(() => {

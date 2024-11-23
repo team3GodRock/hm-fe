@@ -5,7 +5,8 @@ import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, Image
 import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
 import PercentageDisplay from '../../components/PercentageDisplay.jsx';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { getPersonInfoById, getPromiseInfoById, getRecordListById } from '../../api';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -104,15 +105,51 @@ const FormListContainer = styled.div`
 
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
-    const [isPresident, setIsPresident] = useState(false);
-    useEffect(() => {
-        if (location.pathname.includes('/president')) {
-            setIsPresident(true);
+    const [personInfo, setPersonInfo] = useState([]);
+    const [promiseInfo, setPromiseInfo] = useState([]);
+    const [recordInfo, setRecordInfo] = useState([]);
+    
+
+    const fetchProfileData = async () => {
+        try {
+            const data = await getPersonInfoById(1);
+            setPersonInfo(data);
+        } catch (error) {
+            console.error('Error fetching person info:', error);
         }
+    };
+
+    const fetchPromiseData = async () => {
+        try {
+            const data = await getPromiseInfoById(1);
+            setPromiseInfo(data);
+        } catch (error) {
+            console.error('Error fetching promise info:', error);
+        }
+    };
+    
+    const fetchRecordData = async () => {
+        try {
+            const data = await getRecordListById(1);
+            setRecordInfo(data);
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching record list:', error);
+        }
+    };
+
+
+    const fetchDataCallback = useCallback(() => {
+        fetchProfileData();
+        fetchPromiseData();
+        fetchRecordData();
     }, []);
 
-    const dummyData = "loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum ";
-    
+    useEffect(() => {
+        fetchDataCallback();
+        // eslint-disable-next-line
+    }, []);
+
     return (
     <PageBox>
         <SideBar
@@ -120,53 +157,59 @@ const ProfilePage = () => {
         navSubMenus={navSubMenus}/>
         <MainBox>
             <HeaderWrapper>
-                정치인 프로필 - {isPresident ? "대통령" : "도지사"}
+                정치인 프로필 - {personInfo.position == "대통령"? "대통령" : "도지사"}
             </HeaderWrapper>
             <HorizontalDivider />
             <ContainerBox>
                 <HeadProfile>
-                    <ImageWrapper src="https://i.namu.wiki/i/mWLCLSO9VC-_L1C780b2XvYOlXGesQL3NrtsHWm2xVW1paaLWVv8DrDWd3R5iwwjWY-MapZ1rICP2-2mTwiy968UN4tOh9d2S035HaZn__4ZlXYW14-Adjz4vBF9EpfxrmYkqZ_NH_lazX1o-JpJWg.webp" alt="대통령 이미지" />
+                    <ImageWrapper src={personInfo.photo} alt="대통령 이미지" />
                     <TextContainer>
                         <NameContainer>
-                            <TextPosition>대통령</TextPosition>
-                            <TextName>유재석</TextName>
+                            <TextPosition>{personInfo.position}</TextPosition>
+                            <TextName>{personInfo.name}</TextName>
                         </NameContainer>
                         <ResumeContainer>
                             <FormContainer>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                               {recordInfo.slice(-8, -4).map((record, index) => (
+                                   <FormResume key={index} contentText={record.history} />
+                               ))}
                             </FormContainer>
                             <FormContainer>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
-                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                                {recordInfo.slice(-4, -1).map((record, index) => (
+                                   <FormResume key={index} contentText={record.history} />
+                               ))}
                             </FormContainer>
                         </ResumeContainer>
                     </TextContainer>
                 </HeadProfile>
                 <HorizontalDivider />
                 <ProportionContainer>
-                    <PercentageDisplay label="지지율" percentage={50}/>
-                    <PercentageDisplay label="공약 달성도" percentage={70}/>
+                    <PercentageDisplay label="지지율" percentage={Math.round(personInfo.supporting)}/>
+                    <PercentageDisplay label="공약 달성도" percentage={Math.round(personInfo.achievement)}/>
                 </ProportionContainer>
                 <PromiseContainer>
                     공약
                     <PromiseListWrapper>
                         <FormListContainer>
-                            <FormEmployment HeaderText="공약1" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약2" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약3" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약4" ContentText={dummyData} isSucceed={true}/>
+                            {promiseInfo.slice(0, 4).map((promise, index) => (
+                                <FormEmployment
+                                    key={index}
+                                    HeaderText={`공약 ${promise.id}`}
+                                    ContentText={promise.promiseDetail}
+                                    isSucceed={promise.hasPromise}
+                                />
+                            ))}
                         </FormListContainer>
                         <VerticalDivider />
                         <FormListContainer>
-                            <FormEmployment HeaderText="공약5" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약6" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약7" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약8" ContentText={dummyData} isSucceed={false}/>
+                            {promiseInfo.slice(4, 8).map((promise, index) => (
+                                <FormEmployment
+                                    key={index}
+                                    HeaderText={`공약 ${promise.id}`}
+                                    ContentText={promise.promiseDetail}
+                                    isSucceed={promise.hasPromise}
+                                />
+                            ))}
                         </FormListContainer>
                     </PromiseListWrapper>
                 </PromiseContainer>
