@@ -6,7 +6,13 @@ import MapPage from './pages/Map/MapPage';
 
 function App() {
   return (
-    <MapPage/>
+    <RecoilRoot> {/* Recoil 상태 관리를 위한 루트 */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<ProfilePage />} />
+        </Routes>
+      </Router>
+    </RecoilRoot>
   );
 }
 
