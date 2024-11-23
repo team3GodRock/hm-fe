@@ -122,7 +122,6 @@ const NavMenuItem = styled.div`
 const SideBar = ({
     navMenus,
     navSubMenus,
-    title,
   }) => {
     const [selectedNav, setSelectedNav] = useState(0);
     const [selectedMenu, setSelectedMenu] = useState(0);
@@ -230,7 +229,7 @@ const SideBar = ({
           <NavSection>
             <NavHeaderBox>
               <NavHeaderImg src={brandIcon}></NavHeaderImg>
-              <NavHeaderText>{title}</NavHeaderText>
+              <NavHeaderText>정치人</NavHeaderText>
             </NavHeaderBox>
             <NavBox>
               {navMenus.map((item, index) => {
@@ -263,7 +262,6 @@ const SideBar = ({
   SideBar.propTypes = {
     navMenus: PropTypes.array.isRequired,
     navSubMenus: PropTypes.array.isRequired,
-    title: PropTypes.string.isRequired,
   };
 
 export default SideBar;
