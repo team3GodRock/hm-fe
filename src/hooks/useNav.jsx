@@ -23,12 +23,12 @@ export default function useNav() {
         {
           title: "선거철 공약",
           icon: <HomeIcon src={HomeIconPNG} alt="home"/>,
-          to: "/",
+          to: "/list",
         },
         {
           title: "정치인 프로필",
           icon: <HomeIcon src={HomeIconPNG} alt="home"/>,
-          to: "/",
+          to: "/profile",
         },
       ]);
     }
@@ -39,13 +39,13 @@ export default function useNav() {
     let newNavSubMenus = [
       // 공약
       [
-        { title: "대통령", to: "/" },
-        { title: "도지사", to: "/" },
+        { title: "대통령", to: "/president" },
+        { title: "도지사", to: "/govern" },
       ],
       // 프로필
       [
-        { title: "대통령", to: "/" },
-        { title: "도지사", to: "/" },
+        { title: "대통령", to: "/president" },
+        { title: "도지사", to: "/map" },
       ],
     ];
     setNavSubMenus(newNavSubMenus);

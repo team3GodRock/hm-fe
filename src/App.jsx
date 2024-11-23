@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil';
 import ProfilePage from './pages/Profile/ProfilePage';
 import ListPage from './pages/List/ListPage';
 import MapPage from './pages/Map/MapPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -10,8 +11,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ListPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/map" element={<MapPage />} />
+          <Route path="/list/president" element={<ListPage />} />
+          <Route path="/list/govern" element={<ListPage />} />
+          <Route path="/profile/president" element={<ProfilePage />} />
+          <Route path="/profile/govern" element={<ProfilePage />} />
+          <Route path="/profile/map" element={<MapPage />} />
+          
+          <Route path='/*' element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
