@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { IconWrapper } from "../styles/globalstyles";
+import { Dot } from "../styles/globalstyles";
 import PropTypes from "prop-types";
 
 
 const FormContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
     gap: 12px;
 `;
 
@@ -13,9 +15,10 @@ const TextContainer = styled.div`
     display: flex;
 `;
 
-const FormResume = (contentText) => {
+const FormResume = ({ contentText }) => {
     return (
         <FormContainer>
+            <Dot/>
             <TextContainer>
                 {contentText}
             </TextContainer>
@@ -23,7 +26,7 @@ const FormResume = (contentText) => {
     );
 };
 
-PropTypes.FormResume = {
+FormResume.propTypes = {
     contentText: PropTypes.string
 };
 

@@ -13,15 +13,16 @@ const HeadProfile = styled.div`
     gap: 24px;
     padding: 0 20px;
     width: 100%;
+    flex: 1;
 `;
 
 const TextContainer = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 10px;
     padding: 15px 10px;
     align-items: center;
-    width: 100%;
 `;
 
 const NameContainer = styled.div`
@@ -54,8 +55,8 @@ const ResumeContainer = styled.div`
 `;
 
 const FormContainer = styled.div`
+    width: 100%;
     display: flex;
-    flex: 1;
     flex-direction: column;
     gap: 20px;
     padding: 0 20px;
@@ -121,12 +122,17 @@ const ProfilePage = () => {
                             <TextName>유재석</TextName>
                         </NameContainer>
                         <ResumeContainer>
-                            { /* 이력, 경력 받을만큼 받기, 최대 8개까지, 수기로 X */}
                             <FormContainer>
-                                { /*<FormResume ContentText="Loren Ipsum Loren Ipsum Loren Ipsum"/> */}
+                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                               <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
                             </FormContainer>
                             <FormContainer>
-                                {/* FormResume 컴포넌트 사용 */}
+                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
+                                <FormResume contentText="Loren Ipsum Loren Ipsum Loren Ipsum"/>
                             </FormContainer>
                         </ResumeContainer>
                     </TextContainer>

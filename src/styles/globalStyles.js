@@ -52,8 +52,15 @@ export const ImageWrapper = styled.img`
   height: 240px;
 `;
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.img`
   width: 20px;
   height: 20px;
+  background-color: #000000;
+`;
+
+export const Dot = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
   background-color: #000000;
 `;
