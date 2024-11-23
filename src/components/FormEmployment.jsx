@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -6,7 +7,7 @@ const FormContainer = styled.div`
     height: 100%;
     display: flex;
     flex-direction: row;
-    gap: 80px;
+    gap: 60px;
     padding: 8px 0;
     align-items: center;
 `;
@@ -18,6 +19,11 @@ const FormBadge = styled.div`
     background-color: ${props => props.isSucceed ? "#D6FFDE" : "#F6FABD"};
     border-radius: 10px;
     z-index: 1;
+    font-size: 16px;
+    font-weight: 500;
+    color: #3E6AF2;
+    align-items: center;
+    justify-content: center;
 `;
 
 const FormTextContainer = styled.div`
@@ -46,9 +52,17 @@ const FormTextContent = styled.div`
 `;
 
 const FormEmployment = ({ HeaderText, ContentText, isSucceed }) => {
+    const [badgeText, setBadgeText] = useState("완료");
+    
+    useEffect(() => {
+        if (!isSucceed) {
+            setBadgeText("진행");
+        }
+    }, [isSucceed]);
+
     return (
         <FormContainer>
-            <FormBadge isSucceed={isSucceed}/>
+            <FormBadge isSucceed={isSucceed}>{badgeText}</FormBadge>
             <FormTextContainer>
                 <FormTextHeader>{HeaderText}</FormTextHeader>
                 <FormTextContent>{ContentText}</FormTextContent>
