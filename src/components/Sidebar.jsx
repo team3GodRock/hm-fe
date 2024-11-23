@@ -9,7 +9,8 @@ import { VerticalDivider } from '../styles/globalstyles';
 
 const SidebarLayout = styled.div`
   height: 100vh;
-  min-width: 19.5rem;
+  min-width: 18rem;
+  max-width: 18rem;
   display: flex;
   justify-content: space-between;
 `;

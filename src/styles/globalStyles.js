@@ -54,8 +54,9 @@ export const HeaderWrapper = styled.div`
 
 export const ImageWrapper = styled.img`
   display: flex;
-  width: 210px;
-  height: 240px;
+  border-radius: 5%;
+  width: 180px;
+  height: 210px;
 `;
 
 export const IconWrapper = styled.img`
