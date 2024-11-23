@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, ImageWrapper, VerticalDivider } from '../../styles/globalstyles';
 import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
+import FormPercentage from '../../components/FormPercentage.jsx';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -65,16 +66,6 @@ const ProportionContainer = styled.div`
     width: 100%;
     flex-direction: row;
     justify-content: space-evenly;
-`;
-
-const PercentageWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    padding: 10px;
-    width: 300px;
-    height: 100px;
-    background-color: #E4E7EC;
 `;
 
 const PromiseContainer = styled.div`
@@ -142,12 +133,8 @@ const ProfilePage = () => {
                 </HeadProfile>
                 <HorizontalDivider />
                 <ProportionContainer>
-                    <PercentageWrapper>
-                        
-                    </PercentageWrapper>
-                    <PercentageWrapper>
-                        
-                    </PercentageWrapper>
+                    <FormPercentage text="지지율" percentage={50}/>
+                    <FormPercentage text="공약 달성도" percentage={50}/>
                 </ProportionContainer>
                 <PromiseContainer>
                     공약
