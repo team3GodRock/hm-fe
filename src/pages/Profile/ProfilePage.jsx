@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, ImageWrapper, VerticalDivider } from '../../styles/globalstyles';
 import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
-import FormPercentage from '../../components/FormPercentage.jsx';
+import PercentageDisplay from '../../components/PercentageDisplay.jsx';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -133,8 +133,8 @@ const ProfilePage = () => {
                 </HeadProfile>
                 <HorizontalDivider />
                 <ProportionContainer>
-                    <FormPercentage text="지지율" percentage={50}/>
-                    <FormPercentage text="공약 달성도" percentage={50}/>
+                    <PercentageDisplay label="지지율" percentage={50}/>
+                    <PercentageDisplay label="공약 달성도" percentage={70}/>
                 </ProportionContainer>
                 <PromiseContainer>
                     공약
