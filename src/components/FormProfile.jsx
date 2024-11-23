@@ -86,12 +86,8 @@ const TextWrapper = styled.div`
 
 
 const FormProfile = ({ contentArray }) => {
-    const [profileData, setProfileData] = useState([]);
+    const profileData = contentArray;
     const [promiseData, setPromiseData] = useState([]);
-
-    useEffect(() => {
-        setProfileData(contentArray);
-    }, [contentArray]);
 
     const fetchPromiseData = async () => {
         try {
