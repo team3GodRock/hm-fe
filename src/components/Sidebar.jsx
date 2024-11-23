@@ -80,7 +80,6 @@ const NavMenuBox = styled.div`
   cursor: pointer;
 `;
 
-
 const NavMenuContentBox = styled.div`
   display: flex;
   align-items: center;

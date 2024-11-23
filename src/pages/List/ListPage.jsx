@@ -1,11 +1,19 @@
-import './ListPage.css';
+import SideBar from '../../components/Sidebar';
+import { PageBox, MainBox } from '../../styles/globalstyles';
+import useNav from '../../hooks/useNav';
 
 const ListPage = () => {
+    const { navMenus, navSubMenus } = useNav();
+
     return (
-    <div className="container">
-        <h1 className="title">ListPage</h1>
-        <p className="description">ListPage</p>
-    </div>
+        <PageBox>
+            <SideBar
+            navMenus={navMenus}
+            navSubMenus={navSubMenus}/>
+            <MainBox>
+                <div>리스트 페이지</div>
+            </MainBox>
+        </PageBox>
     );
 }
 
