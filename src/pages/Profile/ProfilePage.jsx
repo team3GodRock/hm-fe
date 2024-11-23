@@ -1,9 +1,9 @@
 import SideBar from '../../components/Sidebar';
-import './ProfilePage.css';
 import useNav from '../../hooks/useNav';
 import styled from 'styled-components';
-import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, ImageWrapper } from '../../styles/globalstyles';
-
+import { ContainerBox, MainBox, PageBox, HeaderWrapper, HorizontalDivider, ImageWrapper, VerticalDivider } from '../../styles/globalstyles';
+import FormEmployment from '../../components/FormEmployment.jsx';
+import FormResume from '../../components/FormResume.jsx';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -11,6 +11,7 @@ const HeadProfile = styled.div`
     align-items: center;
     gap: 24px;
     padding: 0 20px;
+    width: 100%;
 `;
 
 const TextContainer = styled.div`
@@ -19,6 +20,7 @@ const TextContainer = styled.div`
     gap: 10px;
     padding: 15px 10px;
     align-items: center;
+    width: 100%;
 `;
 
 const NameContainer = styled.div`
@@ -27,7 +29,7 @@ const NameContainer = styled.div`
     gap: 10px;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 48px 16px;
+    padding: 16px 48px;
 `;
 
 const TextPosition = styled.div`
@@ -47,6 +49,7 @@ const ResumeContainer = styled.div`
     flex-direction: row;
     gap: 20px;
     padding: 0 20px;
+    height: 100%;
 `;
 
 const FormContainer = styled.div`
@@ -57,16 +60,59 @@ const FormContainer = styled.div`
     padding: 0 20px;
 `;
 
-const FormResume = styled.div`
+const ProportionContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+`;
+
+const PercentageWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 100px;
+    background-color: #E4E7EC;
+`;
+
+const PromiseContainer = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    font-size: 32px;
+    font-weight: 600;
+    justify-content: flex-start;
+    align-items: center;
 `;
 
+const PromiseListWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+`;
+
+const FormListContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+`;
 
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
 
+    const dummyData = "loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum ";
     return (
     <PageBox>
         <SideBar
@@ -81,27 +127,46 @@ const ProfilePage = () => {
                     <TextContainer>
                         <NameContainer>
                             <TextPosition>대통령</TextPosition>
-                            <TextName>문재인</TextName>
+                            <TextName>유재석</TextName>
                         </NameContainer>
                         <ResumeContainer>
                             { /* 이력, 경력 받을만큼 받기, 최대 8개까지, 수기로 X */}
                             <FormContainer>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
+                                { /*<FormResume ContentText="Loren Ipsum Loren Ipsum Loren Ipsum"/> */}
                             </FormContainer>
                             <FormContainer>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
-                                <FormResume> 안녕하세요 </FormResume>
+                                {/* FormResume 컴포넌트 사용 */}
                             </FormContainer>
                         </ResumeContainer>
                     </TextContainer>
                 </HeadProfile>
                 <HorizontalDivider />
-
+                <ProportionContainer>
+                    <PercentageWrapper>
+                        
+                    </PercentageWrapper>
+                    <PercentageWrapper>
+                        
+                    </PercentageWrapper>
+                </ProportionContainer>
+                <PromiseContainer>
+                    공약
+                    <PromiseListWrapper>
+                        <FormListContainer>
+                            <FormEmployment HeaderText="공약1" ContentText={dummyData} isSucceed={true}/>
+                            <FormEmployment HeaderText="공약2" ContentText={dummyData} isSucceed={true}/>
+                            <FormEmployment HeaderText="공약3" ContentText={dummyData} isSucceed={true}/>
+                            <FormEmployment HeaderText="공약4" ContentText={dummyData} isSucceed={true}/>
+                        </FormListContainer>
+                        <VerticalDivider />
+                        <FormListContainer>
+                            <FormEmployment HeaderText="공약5" ContentText={dummyData} isSucceed={false}/>
+                            <FormEmployment HeaderText="공약6" ContentText={dummyData} isSucceed={false}/>
+                            <FormEmployment HeaderText="공약7" ContentText={dummyData} isSucceed={false}/>
+                            <FormEmployment HeaderText="공약8" ContentText={dummyData} isSucceed={false}/>
+                        </FormListContainer>
+                    </PromiseListWrapper>
+                </PromiseContainer>
             </ContainerBox>
         </MainBox>
     </PageBox>
