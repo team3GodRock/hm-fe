@@ -3,7 +3,7 @@ import { useState } from "react";
 import regionData from "../../assets/data/regiondata";
 import './MapPage.css'; // css 파일
 import SideBar from "../../components/Sidebar";
-import { HeaderWrapper, MainBox, PageBox } from "../../styles/globalstyles";
+import { HeaderWrapper, HorizontalDivider, MainBox, PageBox } from "../../styles/globalstyles";
 import useNav from "../../hooks/useNav";
 
 const MapPage = () => {
@@ -27,6 +27,7 @@ const MapPage = () => {
             navSubMenus={navSubMenus}/>
             <MainBox>
                 <HeaderWrapper>정치인 프로필 - 도지사</HeaderWrapper>
+                <HorizontalDivider/>
                 <div className="container">
                 <h1 className="title">대한민국 지도</h1>
                 <p className="description">지역을 클릭하면 도지사 정보를 확인할 수 있습니다.</p>
