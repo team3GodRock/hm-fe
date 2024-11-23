@@ -6,7 +6,7 @@ import FormEmployment from '../../components/FormEmployment.jsx';
 import FormResume from '../../components/FormResume.jsx';
 import PercentageDisplay from '../../components/PercentageDisplay.jsx';
 import { useCallback, useEffect, useState } from 'react';
-import { getPersonInfoById } from '../../api';
+import { getPersonInfoById, getPromiseInfoById } from '../../api';
 
 const HeadProfile = styled.div`
     display: flex;
@@ -106,6 +106,7 @@ const FormListContainer = styled.div`
 const ProfilePage = () => {
     const { navMenus, navSubMenus } = useNav();
     const [personInfo, setPersonInfo] = useState({});
+    const [promiseInfo, setPromiseInfo] = useState([]);
     
 
     const fetchProfileData = async () => {
@@ -116,9 +117,20 @@ const ProfilePage = () => {
             console.error('Error fetching person info:', error);
         }
     };
+
+    const fetchPromiseData = async () => {
+        try {
+            const data = await getPromiseInfoById(1);
+            setPromiseInfo(data);
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching promise info:', error);
+        }
+    };
     
     const fetchDataCallback = useCallback(() => {
         fetchProfileData();
+        fetchPromiseData();
     }, []);
 
     useEffect(() => {
@@ -126,8 +138,6 @@ const ProfilePage = () => {
         // eslint-disable-next-line
     }, []);
 
-    const dummyData = "loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum ";
-    
     return (
     <PageBox>
         <SideBar
@@ -171,17 +181,25 @@ const ProfilePage = () => {
                     공약
                     <PromiseListWrapper>
                         <FormListContainer>
-                            <FormEmployment HeaderText="공약1" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약2" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약3" ContentText={dummyData} isSucceed={true}/>
-                            <FormEmployment HeaderText="공약4" ContentText={dummyData} isSucceed={true}/>
+                            {promiseInfo.slice(0, 4).map((promise, index) => (
+                                <FormEmployment
+                                    key={index}
+                                    HeaderText={`공약 ${promise.id}`}
+                                    ContentText={promise.promiseDetail}
+                                    isSucceed={promise.hasPromise}
+                                />
+                            ))}
                         </FormListContainer>
                         <VerticalDivider />
                         <FormListContainer>
-                            <FormEmployment HeaderText="공약5" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약6" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약7" ContentText={dummyData} isSucceed={false}/>
-                            <FormEmployment HeaderText="공약8" ContentText={dummyData} isSucceed={false}/>
+                            {promiseInfo.slice(4, 8).map((promise, index) => (
+                                <FormEmployment
+                                    key={index}
+                                    HeaderText={`공약 ${promise.id}`}
+                                    ContentText={promise.promiseDetail}
+                                    isSucceed={promise.hasPromise}
+                                />
+                            ))}
                         </FormListContainer>
                     </PromiseListWrapper>
                 </PromiseContainer>
